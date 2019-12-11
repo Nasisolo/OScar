@@ -208,17 +208,22 @@ public class MainActivity extends AppCompatActivity {
 
     private void legoMain(EV3.Api api) {
         final String TAG = Prelude.ReTAG("legoMain");
+        Robot robot = new Robot(api);
 
         // get sensors
+        /*
         final LightSensor lightSensor = api.getLightSensor(EV3.InputPort._3);
         final UltrasonicSensor ultraSensor = api.getUltrasonicSensor(EV3.InputPort._2);
         final TouchSensor touchSensor = api.getTouchSensor(EV3.InputPort._1);
         final GyroSensor gyroSensor = api.getGyroSensor(EV3.InputPort._4);
-
+        */
         // get motors
+        /*
         motorL = api.getTachoMotor(EV3.OutputPort.A);
         motorR = api.getTachoMotor(EV3.OutputPort.B);
         motorHand = api.getTachoMotor(EV3.OutputPort.D);
+        */
+
 
 
         try {
@@ -248,8 +253,6 @@ public class MainActivity extends AppCompatActivity {
                     Future<Boolean> touched = touchSensor.getPressed();
                     updateStatus(touchSensor, "touch", touched.get() ? 1 : 0);
 
-
-                    //Future<Float> sesoreDista = ultraSensor.getDistance();
 
                     Future<Float> posL = motorL.getPosition();
                     updateStatus(motorL, "motor position", posL.get());
@@ -310,9 +313,6 @@ public class MainActivity extends AppCompatActivity {
                     motorHand.waitUntilReady();
                     Log.d(TAG, "long motor operation completed");
 
-
-                    //pickup(motorHand);
-                    //release(motorHand);
                 } catch (IOException | InterruptedException | ExecutionException e) {
                     e.printStackTrace();
                 }
