@@ -27,6 +27,14 @@ public class Robot {
     private final static EV3.InputPort TOUCH_SENSOR_PORT = EV3.InputPort._1;
     private final static EV3.InputPort GYRO_SENSOR_PORT = EV3.InputPort._4;
 
+    // const of movements
+    private final static int STEP_ROTATION = 215;
+    private final static int STEP_FORWARD = 1000;
+    private final static int SPEED_FORWARD = 100;
+    private final static int SPEED_ROTATION = 50;
+    private final static int STEP_PICKUP_RELEASE = 2100;
+    private final static int SPEED_PICKUP_RELEASE = 100;
+
     private LightSensor lightSensor;
     private UltrasonicSensor ultraSensor;
     private TouchSensor touchSensor;
@@ -60,5 +68,49 @@ public class Robot {
 
     public void connectToEV3(String brick_name) throws IOException{
         this.connection = new BluetoothConnection(brick_name).connect(); // replace with your own brick name
+    }
+    /*
+    public void getGyro(){
+        Float gyro = gyroSensor.getAngle().get();
+        updateStatus(gyroSensor, "gyro angle", gyro.get()); // call get() for actually reading the value - this may block!
+    }
+     */
+
+    // GETTER
+
+    public TachoMotor getLeftMotor(){
+        return left;
+    }
+    public TachoMotor getRightMotor(){
+        return right;
+    }
+    public TachoMotor getArmMotor(){
+        return arm;
+    }
+
+    // f. to pickup and release the ball
+    public void pickup() throws IOException{
+        arm.setStepSpeed(SPEED_PICKUP_RELEASE,0, STEP_PICKUP_RELEASE, 0, true);
+        arm.waitCompletion();
+    }
+
+    public void release() throws IOException{
+        arm.setStepSpeed(-SPEED_PICKUP_RELEASE,0, STEP_PICKUP_RELEASE, 0, true );
+        arm.waitCompletion();
+    }
+
+
+    public void moveLeft() throws IOException{
+        left.setStepSpeed(-SPEED_ROTATION, 200, STEP_ROTATION, 200, true);
+        right.setStepSpeed(SPEED_ROTATION, 200, STEP_ROTATION, 200, true);
+        left.waitCompletion();
+        right.waitCompletion();
+    }
+
+    public void moveRight() throws IOException{
+        left.setStepSpeed(SPEED_ROTATION, 200, STEP_ROTATION, 200, true);
+        right.setStepSpeed(-SPEED_ROTATION, 200, STEP_ROTATION, 200, true);
+        left.waitCompletion();
+        right.waitCompletion();
     }
 }

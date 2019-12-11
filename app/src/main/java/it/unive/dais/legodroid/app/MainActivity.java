@@ -35,6 +35,7 @@ import it.unive.dais.legodroid.lib.util.ThrowingConsumer;
 public class MainActivity extends AppCompatActivity {
 
     private final static String BRICK_NAME = "OScar";
+
     private final static int STEP_ROTATION = 215;
     private final static int STEP_FORWARD = 1000;
     private final static int SPEED_FORWARD = 100;
@@ -121,15 +122,7 @@ public class MainActivity extends AppCompatActivity {
         r.waitCompletion();
     }
 
-    private void pickup(TachoMotor hand) throws IOException, InterruptedException, ExecutionException{
-        hand.setStepSpeed(100,0, STEP_PICKUP_RELEASE, 0, true);
-        hand.waitCompletion();
-    }
 
-    private void release(TachoMotor hand) throws IOException, InterruptedException, ExecutionException{
-        hand.setStepSpeed(-100,0, STEP_PICKUP_RELEASE, 0, true );
-        hand.waitCompletion();
-    }
 
     private void move(TachoMotor l, TachoMotor r, String direction) throws IOException{
         switch (direction) {
@@ -232,6 +225,8 @@ public class MainActivity extends AppCompatActivity {
             while (!api.ev3.isCancelled()) {    // loop until cancellation signal is fired
                 try {
                     // values returned by getters are boxed within a special Future object
+
+                    /*
                     Future<Float> gyro = gyroSensor.getAngle();
                     updateStatus(gyroSensor, "gyro angle", gyro.get()); // call get() for actually reading the value - this may block!
 
@@ -252,25 +247,28 @@ public class MainActivity extends AppCompatActivity {
 
                     Future<Boolean> touched = touchSensor.getPressed();
                     updateStatus(touchSensor, "touch", touched.get() ? 1 : 0);
+                    */
 
-
-                    Future<Float> posL = motorL.getPosition();
+                    Future<Float> posL = robot.getLeftMotor().getPosition();
                     updateStatus(motorL, "motor position", posL.get());
 
-                    Future<Float> speedL = motorL.getSpeed();
+                    Future<Float> speedL = robot.getLeftMotor().getSpeed();
                     updateStatus(motorL, "motor speed", speedL.get());
 
-                    Future<Float> posR = motorR.getPosition();
+                    Future<Float> posR = robot.getRightMotor().getPosition();
                     updateStatus(motorR, "motor position", posR.get());
 
-                    Future<Float> speedR = motorR.getSpeed();
+                    Future<Float> speedR = robot.getRightMotor().getSpeed();
                     updateStatus(motorR, "motor speed", speedR.get());
 
-                    Future<Float> posH = motorHand.getPosition();
+                    Future<Float> posH = robot.getArmMotor().getPosition();
                     updateStatus(motorHand, "motor position", posH.get());
 
-                    Future<Float> speedH = motorHand.getSpeed();
+                    Future<Float> speedH = robot.getArmMotor().getSpeed();
                     updateStatus(motorHand, "motor speed", speedH.get());
+
+
+
 
                     /*
                     motorL.setStepSpeed(100, 0, 5000, 0, true);
@@ -288,14 +286,17 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+                    robot.moveLeft();
 
-                    pickup(motorHand);
-                    release(motorHand);
+                    robot.pickup();
+                    robot.release();
 
+                    robot.moveRight();
 
+/*
 
                     Log.d(TAG, "waiting for long motor operation completed...");
-                    motorL.waitUntilReady();
+                    robot.getLeftMotor().waitUntilReady();
                     Log.d(TAG, "long motor operation completed");
 
                     //--------------------------
@@ -304,15 +305,15 @@ public class MainActivity extends AppCompatActivity {
                     //motorR.waitCompletion();
                     //motorR.setStepSpeed(-20, 0, 5000, 0, true);
                     Log.d(TAG, "waiting for long motor operation completed...");
-                    motorR.waitUntilReady();
+                    robot.getRightMotor().waitUntilReady();
                     Log.d(TAG, "long motor operation completed");
 
 
 
                     Log.d(TAG, "waiting for long motor operation completed...");
-                    motorHand.waitUntilReady();
+                    robot.getArmMotor().waitUntilReady();
                     Log.d(TAG, "long motor operation completed");
-
+*/
                 } catch (IOException | InterruptedException | ExecutionException e) {
                     e.printStackTrace();
                 }
