@@ -31,14 +31,27 @@ import it.unive.dais.legodroid.lib.util.Consumer;
 import it.unive.dais.legodroid.lib.util.Prelude;
 import it.unive.dais.legodroid.lib.util.ThrowingConsumer;
 
+
 public class MainActivity extends AppCompatActivity {
+
+    private final static String BRICK_NAME = "OScar";
+    private final static int STEP_ROTATION = 215;
+    private final static int STEP_FORWARD = 1000;
+    private final static int SPEED_FORWARD = 100;
+    private final static int SPEED_ROTATION = 100;
+    private final static int STEP_PICKUP_RELEASE = 2100;
+
 
     private static final String TAG = Prelude.ReTAG("MainActivity");
 
     private TextView textView;
     private final Map<String, Object> statusMap = new HashMap<>();
     @Nullable
-    private TachoMotor motor;   // this is a class field because we need to access it from multiple methods
+    private TachoMotor motorL;   // this is a class field because we need to access it from multiple methods
+    private TachoMotor motorR;
+    private TachoMotor motorHand;
+
+
 
     private void updateStatus(@NonNull Plug p, String key, Object value) {
         Log.d(TAG, String.format("%s: %s: %s", p, key, value));
@@ -80,9 +93,75 @@ public class MainActivity extends AppCompatActivity {
 
     // quick wrapper for accessing field 'motor' only when not-null; also ignores any exception thrown
     private void applyMotor(@NonNull ThrowingConsumer<TachoMotor, Throwable> f) {
-        if (motor != null)
-            Prelude.trap(() -> f.call(motor));
+        if (motorL != null && motorR != null && motorHand != null) {
+            Prelude.trap(() -> f.call(motorL));
+            Prelude.trap(() -> f.call(motorR));
+            Prelude.trap(() -> f.call(motorHand));
+        }
     }
+
+    private void moveForward(TachoMotor l, TachoMotor r) throws IOException, InterruptedException, ExecutionException{
+        l.setStepSpeed(SPEED_FORWARD, 0, STEP_FORWARD, 0, true);
+        r.setStepSpeed(SPEED_FORWARD, 0, STEP_FORWARD, 0, true);
+        l.waitCompletion();
+        r.waitCompletion();
+    }
+
+    private void moveLeft(TachoMotor l, TachoMotor r) throws IOException, InterruptedException, ExecutionException{
+        l.setStepSpeed(-SPEED_ROTATION, 0, STEP_ROTATION, 0, true);
+        r.setStepSpeed(SPEED_ROTATION, 0, STEP_ROTATION, 0, true);
+        l.waitCompletion();
+        r.waitCompletion();
+    }
+
+    private void moveRight(TachoMotor l, TachoMotor r) throws IOException, InterruptedException, ExecutionException{
+        l.setStepSpeed(SPEED_ROTATION, 0, STEP_ROTATION, 0, true);
+        r.setStepSpeed(-SPEED_ROTATION, 0, STEP_ROTATION, 0, true);
+        l.waitCompletion();
+        r.waitCompletion();
+    }
+
+    private void pickup(TachoMotor hand) throws IOException, InterruptedException, ExecutionException{
+        hand.setStepSpeed(100,0, STEP_PICKUP_RELEASE, 0, true);
+        hand.waitCompletion();
+    }
+
+    private void release(TachoMotor hand) throws IOException, InterruptedException, ExecutionException{
+        hand.setStepSpeed(-100,0, STEP_PICKUP_RELEASE, 0, true );
+        hand.waitCompletion();
+    }
+
+    private void move(TachoMotor l, TachoMotor r, String direction) throws IOException{
+        switch (direction) {
+            case "forward":
+                l.setStepSpeed(SPEED_FORWARD, 0, STEP_FORWARD, 0, true);
+                r.setStepSpeed(SPEED_FORWARD, 0, STEP_FORWARD, 0, true);
+                l.waitCompletion();
+                r.waitCompletion();
+            break;
+
+            case "left":
+                l.setStepSpeed(-SPEED_ROTATION, 0, STEP_ROTATION, 0, true);
+                r.setStepSpeed(SPEED_ROTATION, 0, STEP_ROTATION, 0, true);
+                l.waitCompletion();
+                r.waitCompletion();
+                break;
+
+            case "right":
+                l.setStepSpeed(SPEED_ROTATION, 0, STEP_ROTATION, 0, true);
+                r.setStepSpeed(-SPEED_ROTATION, 0, STEP_ROTATION, 0, true);
+                l.waitCompletion();
+                r.waitCompletion();
+                break;
+
+            default:
+                break;
+
+        }
+    }
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
         textView = findViewById(R.id.textView);
 
         try {
-            BluetoothConnection.BluetoothChannel conn = new BluetoothConnection("EV3").connect(); // replace with your own brick name
+            BluetoothConnection.BluetoothChannel conn = new BluetoothConnection(BRICK_NAME).connect(); // replace with your own brick name
 
             // connect to EV3 via bluetooth
             GenEV3<MyCustomApi> ev3 = new GenEV3<>(conn);
@@ -115,11 +194,15 @@ public class MainActivity extends AppCompatActivity {
                 m.setSpeed(x);
                 m.start();
             }));
+
         } catch (IOException e) {
             Log.e(TAG, "fatal error: cannot connect to EV3");
             e.printStackTrace();
         }
     }
+
+
+
 
     // main program executed by EV3
 
@@ -133,7 +216,10 @@ public class MainActivity extends AppCompatActivity {
         final GyroSensor gyroSensor = api.getGyroSensor(EV3.InputPort._4);
 
         // get motors
-        motor = api.getTachoMotor(EV3.OutputPort.A);
+        motorL = api.getTachoMotor(EV3.OutputPort.A);
+        motorR = api.getTachoMotor(EV3.OutputPort.B);
+        motorHand = api.getTachoMotor(EV3.OutputPort.D);
+
 
         try {
             applyMotor(TachoMotor::resetPosition);
@@ -162,19 +248,71 @@ public class MainActivity extends AppCompatActivity {
                     Future<Boolean> touched = touchSensor.getPressed();
                     updateStatus(touchSensor, "touch", touched.get() ? 1 : 0);
 
-                    Future<Float> pos = motor.getPosition();
-                    updateStatus(motor, "motor position", pos.get());
 
-                    Future<Float> speed = motor.getSpeed();
-                    updateStatus(motor, "motor speed", speed.get());
+                    //Future<Float> sesoreDista = ultraSensor.getDistance();
 
-                    motor.setStepSpeed(20, 0, 5000, 0, true);
-                    motor.waitCompletion();
-                    motor.setStepSpeed(-20, 0, 5000, 0, true);
+                    Future<Float> posL = motorL.getPosition();
+                    updateStatus(motorL, "motor position", posL.get());
+
+                    Future<Float> speedL = motorL.getSpeed();
+                    updateStatus(motorL, "motor speed", speedL.get());
+
+                    Future<Float> posR = motorR.getPosition();
+                    updateStatus(motorR, "motor position", posR.get());
+
+                    Future<Float> speedR = motorR.getSpeed();
+                    updateStatus(motorR, "motor speed", speedR.get());
+
+                    Future<Float> posH = motorHand.getPosition();
+                    updateStatus(motorHand, "motor position", posH.get());
+
+                    Future<Float> speedH = motorHand.getSpeed();
+                    updateStatus(motorHand, "motor speed", speedH.get());
+
+                    /*
+                    motorL.setStepSpeed(100, 0, 5000, 0, true);
+                    motorR.setStepSpeed(100, 0, 5000, 0, true);
+                    motorL.waitCompletion();
+                    motorR.waitCompletion();
+                    */
+                    //motorL.setStepSpeed(-20, 0, 5000, 0, true);
+
+                    //moveForward(motorL, motorR);
+                    //moveLeft(motorL, motorR);
+                    //moveRight(motorL, motorR);
+
+                    //motorHand.setStepSpeed(100,0,1700, 0, false);
+
+
+
+
+                    pickup(motorHand);
+                    release(motorHand);
+
+
+
                     Log.d(TAG, "waiting for long motor operation completed...");
-                    motor.waitUntilReady();
+                    motorL.waitUntilReady();
                     Log.d(TAG, "long motor operation completed");
 
+                    //--------------------------
+
+                    //motorR.setStepSpeed(-100, 0, 5000, 0, true);
+                    //motorR.waitCompletion();
+                    //motorR.setStepSpeed(-20, 0, 5000, 0, true);
+                    Log.d(TAG, "waiting for long motor operation completed...");
+                    motorR.waitUntilReady();
+                    Log.d(TAG, "long motor operation completed");
+
+
+
+                    Log.d(TAG, "waiting for long motor operation completed...");
+                    motorHand.waitUntilReady();
+                    Log.d(TAG, "long motor operation completed");
+
+
+                    //pickup(motorHand);
+                    //release(motorHand);
                 } catch (IOException | InterruptedException | ExecutionException e) {
                     e.printStackTrace();
                 }
