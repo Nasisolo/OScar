@@ -162,11 +162,14 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         textView = findViewById(R.id.textView);
 
+
         try {
-            BluetoothConnection.BluetoothChannel conn = new BluetoothConnection(BRICK_NAME).connect(); // replace with your own brick name
+
+            //BluetoothConnection.BluetoothChannel conn = new BluetoothConnection(BRICK_NAME).connect(); // replace with your own brick name
+            BrickConnection conn = new BrickConnection("OScar");
 
             // connect to EV3 via bluetooth
-            GenEV3<MyCustomApi> ev3 = new GenEV3<>(conn);
+            GenEV3<MyCustomApi> ev3 = new GenEV3<>(conn.connectToEv3());
 //            EV3 ev3 = new EV3(conn);  // alternatively an EV3 subclass
 
             Button stopButton = findViewById(R.id.stopButton);
@@ -201,7 +204,10 @@ public class MainActivity extends AppCompatActivity {
 
     private void legoMain(EV3.Api api) {
         final String TAG = Prelude.ReTAG("legoMain");
-        Robot robot = new Robot(api);
+
+
+
+
 
         // get sensors
         /*
@@ -224,6 +230,8 @@ public class MainActivity extends AppCompatActivity {
 
             while (!api.ev3.isCancelled()) {    // loop until cancellation signal is fired
                 try {
+                    Robot robot = new Robot(api, "OScar");
+
                     // values returned by getters are boxed within a special Future object
 
                     /*
@@ -270,6 +278,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
+
                     /*
                     motorL.setStepSpeed(100, 0, 5000, 0, true);
                     motorR.setStepSpeed(100, 0, 5000, 0, true);
@@ -285,13 +294,15 @@ public class MainActivity extends AppCompatActivity {
                     //motorHand.setStepSpeed(100,0,1700, 0, false);
 
 
-
+                    /*
                     robot.moveLeft();
 
                     robot.pickup();
                     robot.release();
 
                     robot.moveRight();
+
+                     */
 
 /*
 
