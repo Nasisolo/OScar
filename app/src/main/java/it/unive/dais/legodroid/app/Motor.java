@@ -19,20 +19,22 @@ public class Motor {
         return motor;
     }
 
+
+    // methods to update status of motor components
     public Future<Float> getMotorPosition() throws IOException {
-        return this.getMotor().getPosition();
+        return motor.getPosition();
     }
 
     public Float getMotorPositionValue() throws IOException, InterruptedException, ExecutionException {
-        return this.getMotor().getPosition().get();
+        return this.getMotorPosition().get();
     }
 
     public Future<Float> getMotorSpeed() throws IOException {
-        return this.getMotor().getSpeed();
+        return motor.getSpeed();
     }
 
     public Float getMotorSpeedValue() throws IOException, InterruptedException, ExecutionException {
-        return this.getMotor().getSpeed().get();
+        return this.getMotorSpeed().get();
     }
 
 

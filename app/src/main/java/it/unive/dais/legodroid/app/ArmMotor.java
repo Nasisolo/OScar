@@ -3,7 +3,6 @@ package it.unive.dais.legodroid.app;
 import java.io.IOException;
 
 import it.unive.dais.legodroid.lib.EV3;
-import it.unive.dais.legodroid.lib.plugs.TachoMotor;
 
 public class ArmMotor extends Motor {
 

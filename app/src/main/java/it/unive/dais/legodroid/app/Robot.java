@@ -1,14 +1,20 @@
 package it.unive.dais.legodroid.app;
 
+
+import android.util.Log;
+
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 
 import it.unive.dais.legodroid.lib.EV3;
-import it.unive.dais.legodroid.lib.comm.BluetoothConnection;
 import it.unive.dais.legodroid.lib.plugs.GyroSensor;
 import it.unive.dais.legodroid.lib.plugs.LightSensor;
 import it.unive.dais.legodroid.lib.plugs.TachoMotor;
 import it.unive.dais.legodroid.lib.plugs.TouchSensor;
 import it.unive.dais.legodroid.lib.plugs.UltrasonicSensor;
+
+import static it.unive.dais.legodroid.lib.util.Prelude.TAG;
 
 public class Robot {
 
@@ -19,6 +25,7 @@ public class Robot {
     // output ports
     private final static EV3.OutputPort RIGHT_MOTOR_PORT = EV3.OutputPort.A;    //out. port for right motor
     private final static EV3.OutputPort LEFT_MOTOR_PORT = EV3.OutputPort.B;     //out. port for left motor
+    private final static EV3.OutputPort EXTRA_MOTOR_PORT =  EV3.OutputPort.C;   //out. port unused
     private final static EV3.OutputPort ARM_MOTOR_PORT = EV3.OutputPort.D;      //out. port for mech. arm
 
     // output ports
@@ -52,16 +59,13 @@ public class Robot {
         this.touchSensor = api.getTouchSensor(TOUCH_SENSOR_PORT);
         this.gyroSensor = api.getGyroSensor(GYRO_SENSOR_PORT);
 
-        // get motors
+        // Motors initialization
         this.right = new WheelMotor(api, RIGHT_MOTOR_PORT);
         this.left = new WheelMotor(api, LEFT_MOTOR_PORT);
         this.arm = new ArmMotor(api, ARM_MOTOR_PORT);
 
         this.brickName = brickName;
     }
-
-
-
 
 
 
@@ -77,23 +81,75 @@ public class Robot {
         return arm.getMotor();
     }
 
+    public void waitUntilReady() throws IOException, ExecutionException, InterruptedException {
+        right.getMotor().waitUntilReady();
+        left.getMotor().waitUntilReady();
+        arm.getMotor().waitUntilReady();
+    }
+
+
+    /* --------------- STATUS SENSOR UPDATER --------------- */
+
+    public Future<Float> getGyroAngleFuture() throws IOException{
+        return gyroSensor.getAngle();
+    }
+    public Float getGyroAngleValue() throws IOException, ExecutionException, InterruptedException {
+        return this.getGyroAngleFuture().get();
+    }
+
+    public Future<Short> getLightAmbient() throws IOException{
+        return lightSensor.getAmbient();
+    }
+    public Short getLightAmbientValue() throws IOException, ExecutionException, InterruptedException{
+        return this.getLightAmbient().get();
+    }
+
+    public Future<Short> getLightReflection() throws IOException{
+        return lightSensor.getReflected();
+    }
+    public Short getLightReflectionValue() throws IOException, ExecutionException, InterruptedException{
+        return this.getLightReflection().get();
+    }
+
+    public Future<LightSensor.Color> getLightColor() throws IOException{
+        return lightSensor.getColor();
+    }
+    public LightSensor.Color getLightColorValue() throws IOException, ExecutionException, InterruptedException{
+        return this.getLightColor().get();
+    }
+
+    public Future<Float> getUltraDistanceFuture() throws IOException{
+        return ultraSensor.getDistance();
+    }
+
+    public Float getUltraDistanceValue() throws IOException, ExecutionException, InterruptedException{
+        return this.getUltraDistanceFuture().get();
+    }
 
 
 
-/*
+    /* --------------- MOVING METHODS --------------- */
+
+    public void moveForward() throws IOException {
+        left.moveStepWheel(SPEED_FORWARD, 0, STEP_FORWARD, 0, true);
+        right.moveStepWheel(SPEED_FORWARD, 0, STEP_FORWARD, 0, true);
+        left.waitWheelCompletion();
+        right.waitWheelCompletion();
+    }
+
     public void moveLeft() throws IOException{
-        left.setStepSpeed(-SPEED_ROTATION, 0, STEP_ROTATION, 0, true);
-        right.setStepSpeed(SPEED_ROTATION, 0, STEP_ROTATION, 0, true);
-        left.waitCompletion();
-        right.waitCompletion();
+        left.moveStepWheel(-SPEED_ROTATION, 0, STEP_ROTATION, 0, true);
+        right.moveStepWheel(SPEED_ROTATION, 0, STEP_ROTATION, 0, true);
+        left.waitWheelCompletion();
+        right.waitWheelCompletion();
     }
 
     public void moveRight() throws IOException{
-        left.setStepSpeed(SPEED_ROTATION, 0, STEP_ROTATION, 0, true);
-        right.setStepSpeed(-SPEED_ROTATION, 0, STEP_ROTATION, 0, true);
-        left.waitCompletion();
-        right.waitCompletion();
+        left.moveStepWheel(SPEED_ROTATION, 0, STEP_ROTATION, 0, true);
+        right.moveStepWheel(-SPEED_ROTATION, 0, STEP_ROTATION, 0, true);
+        left.waitWheelCompletion();
+        right.waitWheelCompletion();
     }
 
- */
+
 }

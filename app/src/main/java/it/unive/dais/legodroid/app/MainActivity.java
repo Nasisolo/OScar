@@ -34,15 +34,6 @@ import it.unive.dais.legodroid.lib.util.ThrowingConsumer;
 
 public class MainActivity extends AppCompatActivity {
 
-    private final static String BRICK_NAME = "OScar";
-
-    private final static int STEP_ROTATION = 215;
-    private final static int STEP_FORWARD = 1000;
-    private final static int SPEED_FORWARD = 100;
-    private final static int SPEED_ROTATION = 100;
-    private final static int STEP_PICKUP_RELEASE = 2100;
-
-
     private static final String TAG = Prelude.ReTAG("MainActivity");
 
     private TextView textView;
@@ -98,58 +89,6 @@ public class MainActivity extends AppCompatActivity {
             Prelude.trap(() -> f.call(motorL));
             Prelude.trap(() -> f.call(motorR));
             Prelude.trap(() -> f.call(motorHand));
-        }
-    }
-
-    private void moveForward(TachoMotor l, TachoMotor r) throws IOException, InterruptedException, ExecutionException{
-        l.setStepSpeed(SPEED_FORWARD, 0, STEP_FORWARD, 0, true);
-        r.setStepSpeed(SPEED_FORWARD, 0, STEP_FORWARD, 0, true);
-        l.waitCompletion();
-        r.waitCompletion();
-    }
-
-    private void moveLeft(TachoMotor l, TachoMotor r) throws IOException, InterruptedException, ExecutionException{
-        l.setStepSpeed(-SPEED_ROTATION, 0, STEP_ROTATION, 0, true);
-        r.setStepSpeed(SPEED_ROTATION, 0, STEP_ROTATION, 0, true);
-        l.waitCompletion();
-        r.waitCompletion();
-    }
-
-    private void moveRight(TachoMotor l, TachoMotor r) throws IOException, InterruptedException, ExecutionException{
-        l.setStepSpeed(SPEED_ROTATION, 0, STEP_ROTATION, 0, true);
-        r.setStepSpeed(-SPEED_ROTATION, 0, STEP_ROTATION, 0, true);
-        l.waitCompletion();
-        r.waitCompletion();
-    }
-
-
-
-    private void move(TachoMotor l, TachoMotor r, String direction) throws IOException{
-        switch (direction) {
-            case "forward":
-                l.setStepSpeed(SPEED_FORWARD, 0, STEP_FORWARD, 0, true);
-                r.setStepSpeed(SPEED_FORWARD, 0, STEP_FORWARD, 0, true);
-                l.waitCompletion();
-                r.waitCompletion();
-            break;
-
-            case "left":
-                l.setStepSpeed(-SPEED_ROTATION, 0, STEP_ROTATION, 0, true);
-                r.setStepSpeed(SPEED_ROTATION, 0, STEP_ROTATION, 0, true);
-                l.waitCompletion();
-                r.waitCompletion();
-                break;
-
-            case "right":
-                l.setStepSpeed(SPEED_ROTATION, 0, STEP_ROTATION, 0, true);
-                r.setStepSpeed(-SPEED_ROTATION, 0, STEP_ROTATION, 0, true);
-                l.waitCompletion();
-                r.waitCompletion();
-                break;
-
-            default:
-                break;
-
         }
     }
 
@@ -255,7 +194,7 @@ public class MainActivity extends AppCompatActivity {
 
                     Future<Boolean> touched = touchSensor.getPressed();
                     updateStatus(touchSensor, "touch", touched.get() ? 1 : 0);
-                    */
+
 
                     Future<Float> posL = robot.getLeftMotor().getPosition();
                     updateStatus(motorL, "motor position", posL.get());
@@ -275,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
                     Future<Float> speedH = robot.getArmMotor().getSpeed();
                     updateStatus(motorHand, "motor speed", speedH.get());
 
-
+                    */
 
 
 
@@ -304,7 +243,7 @@ public class MainActivity extends AppCompatActivity {
 
                      */
 
-/*
+/*                  SOSTITUITO DA Robot.waitUntilReady();
 
                     Log.d(TAG, "waiting for long motor operation completed...");
                     robot.getLeftMotor().waitUntilReady();
@@ -325,6 +264,8 @@ public class MainActivity extends AppCompatActivity {
                     robot.getArmMotor().waitUntilReady();
                     Log.d(TAG, "long motor operation completed");
 */
+
+                    robot.waitUntilReady();
                 } catch (IOException | InterruptedException | ExecutionException e) {
                     e.printStackTrace();
                 }
