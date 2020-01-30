@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">app</string>
+    <string name="app_name">OScar</string>
+    <string name="title_activity_start">StartActivity</string>
+    <string name="title_size">Dimensioni campo: </string>
 </resources>

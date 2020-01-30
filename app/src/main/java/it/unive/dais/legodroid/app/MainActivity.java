@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
+import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -18,6 +19,9 @@ import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+
+
+
 import it.unive.dais.legodroid.lib.EV3;
 import it.unive.dais.legodroid.lib.GenEV3;
 import it.unive.dais.legodroid.lib.comm.BluetoothConnection;
@@ -84,6 +88,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // quick wrapper for accessing field 'motor' only when not-null; also ignores any exception thrown
+
+    /*
     private void applyMotor(@NonNull ThrowingConsumer<TachoMotor, Throwable> f) {
         if (motorL != null && motorR != null && motorHand != null) {
             Prelude.trap(() -> f.call(motorL));
@@ -92,6 +98,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+     */
+
 
 
 
@@ -99,6 +107,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        //setTitle("OScar");
         textView = findViewById(R.id.textView);
 
 
@@ -109,7 +118,9 @@ public class MainActivity extends AppCompatActivity {
 
             // connect to EV3 via bluetooth
             GenEV3<MyCustomApi> ev3 = new GenEV3<>(conn.connectToEv3());
-//            EV3 ev3 = new EV3(conn);  // alternatively an EV3 subclass
+            // EV3 ev3 = new EV3(conn);  // alternatively an EV3 subclass
+
+
 
             Button stopButton = findViewById(R.id.stopButton);
             stopButton.setOnClickListener(v -> {
@@ -119,9 +130,9 @@ public class MainActivity extends AppCompatActivity {
             Button startButton = findViewById(R.id.startButton);
             startButton.setOnClickListener(v -> Prelude.trap(() -> ev3.run(this::legoMainCustomApi, MyCustomApi::new)));
             // alternatively with plain EV3
-//            startButton.setOnClickListener(v -> Prelude.trap(() -> ev3.run(this::legoMain)));
-
-            setupEditable(R.id.powerEdit, (x) -> applyMotor((m) -> {
+            // startButton.setOnClickListener(v -> Prelude.trap(() -> ev3.run(this::legoMain)));
+            /* NON ELIMINARE
+            setupEditable(R.id.powerEdit, (x) -> robot.applyMotor((m) -> {
                 m.setPower(x);
                 m.start();      // setPower() and setSpeed() require call to start() afterwards
             }));
@@ -130,6 +141,10 @@ public class MainActivity extends AppCompatActivity {
                 m.start();
             }));
 
+            */
+
+
+            // functions for any test + intent + passing parameters x robot
         } catch (IOException e) {
             Log.e(TAG, "fatal error: cannot connect to EV3");
             e.printStackTrace();
@@ -144,32 +159,20 @@ public class MainActivity extends AppCompatActivity {
     private void legoMain(EV3.Api api) {
         final String TAG = Prelude.ReTAG("legoMain");
 
+        Robot robot = new Robot(api, "OScar");
+        BrickConnection conn = new BrickConnection("OScar");
 
 
 
-
-        // get sensors
-        /*
-        final LightSensor lightSensor = api.getLightSensor(EV3.InputPort._3);
-        final UltrasonicSensor ultraSensor = api.getUltrasonicSensor(EV3.InputPort._2);
-        final TouchSensor touchSensor = api.getTouchSensor(EV3.InputPort._1);
-        final GyroSensor gyroSensor = api.getGyroSensor(EV3.InputPort._4);
-        */
-        // get motors
-        /*
-        motorL = api.getTachoMotor(EV3.OutputPort.A);
-        motorR = api.getTachoMotor(EV3.OutputPort.B);
-        motorHand = api.getTachoMotor(EV3.OutputPort.D);
-        */
 
 
 
         try {
-            applyMotor(TachoMotor::resetPosition);
+            robot.applyMotor(TachoMotor::resetPosition);
 
             while (!api.ev3.isCancelled()) {    // loop until cancellation signal is fired
                 try {
-                    Robot robot = new Robot(api, "OScar");
+
 
                     // values returned by getters are boxed within a special Future object
 
@@ -194,25 +197,6 @@ public class MainActivity extends AppCompatActivity {
 
                     Future<Boolean> touched = touchSensor.getPressed();
                     updateStatus(touchSensor, "touch", touched.get() ? 1 : 0);
-
-
-                    Future<Float> posL = robot.getLeftMotor().getPosition();
-                    updateStatus(motorL, "motor position", posL.get());
-
-                    Future<Float> speedL = robot.getLeftMotor().getSpeed();
-                    updateStatus(motorL, "motor speed", speedL.get());
-
-                    Future<Float> posR = robot.getRightMotor().getPosition();
-                    updateStatus(motorR, "motor position", posR.get());
-
-                    Future<Float> speedR = robot.getRightMotor().getSpeed();
-                    updateStatus(motorR, "motor speed", speedR.get());
-
-                    Future<Float> posH = robot.getArmMotor().getPosition();
-                    updateStatus(motorHand, "motor position", posH.get());
-
-                    Future<Float> speedH = robot.getArmMotor().getSpeed();
-                    updateStatus(motorHand, "motor speed", speedH.get());
 
                     */
 
@@ -264,6 +248,27 @@ public class MainActivity extends AppCompatActivity {
                     robot.getArmMotor().waitUntilReady();
                     Log.d(TAG, "long motor operation completed");
 */
+                    //robot.pickup();
+                    /*
+                    for(int i =0; i<1; i++)
+                        robot.moveForward();
+                    */
+                    //robot.moveRight();
+                    //robot.moveLeft();
+
+                    /*
+                    for(int i=0; i<1; i++)
+                        robot.moveBackward();
+                    */
+
+                    //robot.release();
+
+                    /*
+                    robot.moveForward();
+                    robot.moveBackward();
+                    */
+
+                    robot.moveRight();
 
                     robot.waitUntilReady();
                 } catch (IOException | InterruptedException | ExecutionException e) {
@@ -272,7 +277,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
         } finally {
-            applyMotor(TachoMotor::stop);
+            robot.applyMotor(TachoMotor::stop);
         }
     }
 
