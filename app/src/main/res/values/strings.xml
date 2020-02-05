@@ -1,5 +1,22 @@
 <resources>
     <string name="app_name">OScar</string>
-    <string name="title_activity_start">StartActivity</string>
+    <string name="title_activity_start">Inizializzazione sistema</string>
     <string name="title_size">Dimensioni campo: </string>
+    <string name="MsizeTitle">M:</string>
+    <string name="NsizeTitle">N:</string>
+    <string name="title_init">Posizione iniziale: </string>
+    <string name="title_orientation">Orientamento: </string>
+    <string name="MinitTitle">M:</string>
+    <string name="NinitTitle">N:</string>
+    <string name="radioNord">Nord</string>
+    <string name="radioEast">Est</string>
+    <string name="radioSouth">Sud</string>
+    <string name="radioWest">Ovest</string>
+    <string name="title_test">Collaudo: </string>
+    <string name="radioTest1">1.Movimento</string>
+    <string name="radioTest2">2.Comunicazione</string>
+    <string name="radioTest3">3.Interazione</string>
+    <string name="buttonEnter">Invio</string>
+
+
 </resources>

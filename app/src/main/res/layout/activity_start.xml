@@ -1,30 +1,281 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LLStart"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <LinearLayout
-        android:id="@+id/DimCampoLinear"
+    <TextView
+        android:id="@+id/title_size"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="wrap_content"
+        android:text="@string/title_size"
+        android:textAllCaps="true"
+        android:textColor="#009688"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp" />
+
+    <LinearLayout
+        android:id="@+id/LLMsize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/title_size"
-            android:layout_width="match_parent"
+            android:id="@+id/MsizeTitle"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="Dimensioni Campo:"
-            android:textAllCaps="true"
-            android:textColor="#009688"
+            android:layout_weight="1"
+            android:text="@string/MsizeTitle"
+            android:textAlignment="center"
             android:textSize="30sp"
             android:textStyle="bold" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal" />
+        <EditText
+            android:id="@+id/MsizeValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="11"
+            android:importantForAutofill="no"
+            android:inputType="number"
+            android:textAlignment="center"
+            tools:ignore="LabelFor" />
 
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LLNsize"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/NsizeTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/NsizeTitle"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/NsizeValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="11"
+            android:importantForAutofill="no"
+            android:inputType="number"
+            android:textAlignment="center"
+            tools:ignore="LabelFor" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/title_init"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/title_init"
+        android:textAllCaps="true"
+        android:textColor="#009688"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:layout_marginStart="10dp" />
+
+    <LinearLayout
+        android:id="@+id/LLMinit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/MinitTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/MsizeTitle"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/MinitValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="11"
+            android:importantForAutofill="no"
+            android:inputType="number"
+            android:textAlignment="center"
+            tools:ignore="LabelFor" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LLNinit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/NinitTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/NinitTitle"
+            android:textAlignment="center"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            tools:text="@string/NsizeTitle" />
+
+        <EditText
+            android:id="@+id/NinitValue"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:ems="11"
+            android:importantForAutofill="no"
+            android:inputType="number"
+            android:textAlignment="center"
+            tools:ignore="LabelFor" />
+
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/title_orientation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/title_orientation"
+        android:textAllCaps="true"
+        android:textColor="#009688"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:layout_marginStart="10dp" />
+
+    <RadioGroup
+        android:id="@+id/radioOrientation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/radioNord"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:text="@string/radioNord"
+            android:textAlignment="textStart"
+            android:textColor="#666666"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <RadioButton
+            android:id="@+id/radioEast"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:text="@string/radioEast"
+            android:textColor="#666666"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <RadioButton
+            android:id="@+id/radioSouth"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:text="@string/radioSouth"
+            android:textColor="#666666"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+        <RadioButton
+            android:id="@+id/radioWest"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:text="@string/radioWest"
+            android:textColor="#666666"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/title_test"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/title_test"
+        android:textAllCaps="true"
+        android:textColor="#009688"
+        android:textSize="30sp"
+        android:textStyle="bold"
+        android:layout_marginStart="10dp" />
+
+    <RadioGroup
+        android:id="@+id/radioTest"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/radioTest1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/radioTest1"
+            android:textColor="#666666"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginStart="40dp" />
+
+        <RadioButton
+            android:id="@+id/radioTest2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/radioTest2"
+            android:textColor="#666666"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginStart="40dp" />
+
+        <RadioButton
+            android:id="@+id/radioTest3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="40dp"
+            android:text="@string/radioTest3"
+            android:textColor="#666666"
+            android:textSize="24sp"
+            android:textStyle="bold" />
+
+    </RadioGroup>
+
+    <LinearLayout
+        android:id="@+id/LLButton"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:layout_marginTop="50dp">
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+        <Button
+            android:id="@+id/buttonEnter"
+            android:layout_width="wrap_content"
+            android:layout_height="60dp"
+            android:layout_weight="1"
+            android:text="@string/buttonEnter" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
 </LinearLayout>
