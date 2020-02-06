@@ -21,10 +21,11 @@ public class StartActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_start);
-
+        //value of Field's size
         EditText MsizeValue = (EditText)findViewById(R.id.MsizeValue);
         EditText NsizeValue = (EditText)findViewById(R.id.NsizeValue);
 
+        //value of initial position of the robot
         EditText MinitValue = (EditText)findViewById(R.id.MinitValue);
         EditText NinitValue = (EditText)findViewById(R.id.NinitValue);
 

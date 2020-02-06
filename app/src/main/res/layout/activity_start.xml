@@ -11,13 +11,13 @@
         android:id="@+id/title_size"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
         android:text="@string/title_size"
         android:textAllCaps="true"
-        android:textColor="#009688"
+        android:textColor="#B79131"
         android:textSize="30sp"
-        android:textStyle="bold"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp" />
+        android:textStyle="bold" />
 
     <LinearLayout
         android:id="@+id/LLMsize"
@@ -80,12 +80,12 @@
         android:id="@+id/title_init"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:text="@string/title_init"
         android:textAllCaps="true"
-        android:textColor="#009688"
+        android:textColor="#B79131"
         android:textSize="30sp"
-        android:textStyle="bold"
-        android:layout_marginStart="10dp" />
+        android:textStyle="bold" />
 
     <LinearLayout
         android:id="@+id/LLMinit"
@@ -149,12 +149,12 @@
         android:id="@+id/title_orientation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:text="@string/title_orientation"
         android:textAllCaps="true"
-        android:textColor="#009688"
+        android:textColor="#B79131"
         android:textSize="30sp"
-        android:textStyle="bold"
-        android:layout_marginStart="10dp" />
+        android:textStyle="bold" />
 
     <RadioGroup
         android:id="@+id/radioOrientation"
@@ -208,12 +208,12 @@
         android:id="@+id/title_test"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
         android:text="@string/title_test"
         android:textAllCaps="true"
-        android:textColor="#009688"
+        android:textColor="#B79131"
         android:textSize="30sp"
-        android:textStyle="bold"
-        android:layout_marginStart="10dp" />
+        android:textStyle="bold" />
 
     <RadioGroup
         android:id="@+id/radioTest"
