@@ -24,6 +24,12 @@ android {
     }
 }
 
+allprojects {
+    repositories {
+        maven { url "https://jitpack.io" }
+    }
+}
+
 dependencies {
     implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation 'com.android.support:appcompat-v7:28.0.0'
@@ -38,4 +44,7 @@ dependencies {
     implementation project(':lib')
     implementation 'com.quickbirdstudios:opencv:4.1.0'
     implementation 'com.google.android.gms:play-services-nearby:17.0.0'
+    implementation 'androidx.gridlayout:gridlayout:1.0.0'
+    implementation 'com.github.ceryle:FitGridView:v1.0.5'
 }
+

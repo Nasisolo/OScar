@@ -24,6 +24,9 @@
     <string name="logo_of_app">Logo of App</string>
     <string name="todo">TODO</string>
     <string name="powered">powered by Nasi</string>
+    <string name="palline_da_trovare">Palline da trovare:</string>
+    <string name="mappa">Mappa:</string>
+    <string name="_1_movimento">1. Movimento</string>
 
 
 </resources>

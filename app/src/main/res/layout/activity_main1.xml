@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LLBallsNumber"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/titleTest1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/default_gap"
+            android:layout_marginTop="@dimen/default_gap"
+            android:layout_marginRight="@dimen/default_gap"
+            android:layout_marginBottom="@dimen/default_gap"
+            android:text="@string/_1_movimento"
+            android:textAlignment="center"
+            android:textColor="#B79131"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/default_gap"
+        android:layout_marginTop="@dimen/default_gap"
+        android:layout_marginRight="@dimen/default_gap"
+        android:layout_marginBottom="@dimen/default_gap"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/ballsNumberTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/default_gap"
+            android:layout_marginTop="@dimen/default_gap"
+            android:layout_marginRight="@dimen/default_gap"
+            android:layout_marginBottom="@dimen/default_gap"
+            android:text="@string/palline_da_trovare"
+            android:textAlignment="textStart"
+            android:textColor="#B79131"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/ballsNumberValue"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:importantForAutofill="no"
+            android:inputType="number"
+            android:textAlignment="center"
+            android:textSize="24sp"
+            tools:ignore="LabelFor" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LLmapTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/default_gap"
+        android:layout_marginTop="@dimen/default_gap"
+        android:layout_marginRight="@dimen/default_gap"
+        android:layout_marginBottom="@dimen/default_gap"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/mapTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/default_gap"
+            android:layout_marginTop="@dimen/default_gap"
+            android:layout_marginRight="@dimen/default_gap"
+            android:layout_marginBottom="@dimen/default_gap"
+            android:layout_weight="1"
+            android:text="@string/mappa"
+            android:textAlignment="center"
+            android:textColor="#B79131"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <GridView
+        android:id="@+id/grid_view"
+        android:layout_width="match_parent"
+        android:layout_height="388dp"
+        android:columnWidth="20dip"
+        android:gravity="center"
+        android:horizontalSpacing="2dp"
+        android:numColumns="20"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="2dp"
+        android:layout_marginLeft="@dimen/default_gap"
+        android:layout_marginTop="@dimen/default_gap"
+        android:layout_marginRight="@dimen/default_gap"
+        android:layout_marginBottom="@dimen/default_gap"></GridView>
+
+</LinearLayout>
