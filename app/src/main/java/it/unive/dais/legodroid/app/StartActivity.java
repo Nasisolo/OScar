@@ -2,19 +2,14 @@ package it.unive.dais.legodroid.app;
 
 import android.content.Intent;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
-
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class StartActivity extends AppCompatActivity {
 
@@ -32,6 +27,8 @@ public class StartActivity extends AppCompatActivity {
         EditText NinitValue = (EditText)findViewById(R.id.NinitValue);
 
         RadioGroup radioOrientation = (RadioGroup)findViewById(R.id.radioOrientation);
+
+        String direction;
 
         radioOrientation.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
@@ -102,6 +99,7 @@ public class StartActivity extends AppCompatActivity {
                     i.putExtra("Nsize", NsizeValue.getText().toString());
                     i.putExtra("Minit", MinitValue.getText().toString());
                     i.putExtra("Ninit", NinitValue.getText().toString());
+                    i.putExtra("Direction", "North");
 
                     startActivity(i);
                 }

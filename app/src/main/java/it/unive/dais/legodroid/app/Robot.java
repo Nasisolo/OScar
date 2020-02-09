@@ -1,9 +1,6 @@
 package it.unive.dais.legodroid.app;
 
 
-import android.graphics.Path;
-import android.util.Log;
-
 import androidx.annotation.NonNull;
 
 import java.io.IOException;
@@ -22,10 +19,6 @@ import it.unive.dais.legodroid.lib.util.ThrowingConsumer;
 public class Robot {
 
     //private final static String BRICK_NAME = "OScar";
-
-    private String brickName;
-    private EV3.Api api;
-    private boolean busy = false;
 
     // output ports
     private final static EV3.OutputPort RIGHT_MOTOR_PORT = EV3.OutputPort.A;    //out. port for right motor
@@ -70,8 +63,13 @@ public class Robot {
         NORTH, EAST, SOUTH, WEST;
     }
 
+    private String brickName;
+    private EV3.Api api;
+    private boolean busy = false;
+    private FieldMap map;
 
-    public Robot(EV3.Api api, String brickName) {
+
+    public Robot(EV3.Api api, String brickName, FieldMap map) {
 
         // get sensors
         this.lightSensor = api.getLightSensor(LIGHT_SENSOR_PORT);
@@ -85,6 +83,7 @@ public class Robot {
         this.arm = new ArmMotor(api, ARM_MOTOR_PORT);
 
         this.brickName = brickName;
+        this.map = map;
 
     }
 
@@ -167,6 +166,8 @@ public class Robot {
         left.moveStepWheel(SPEED_FORWARD, STEP1_FORWARD, STEP2_FORWARD, STEP3_FORWARD-10, true);
         right.waitWheelCompletion();
         left.waitWheelCompletion();
+
+        map.moveForward();
     }
 
     public void moveBackward() throws IOException {
@@ -176,11 +177,13 @@ public class Robot {
         left.waitWheelCompletion();
     }
 
-    public void moveLeft() throws IOException{
+    public void turnLeft() throws IOException{
         left.moveStepWheel(-SPEED_ROTATION, STEP1_ROTATION, STEP2_ROTATION, STEP3_ROTATION, true);
         right.moveStepWheel(SPEED_ROTATION, STEP1_ROTATION, STEP2_ROTATION, STEP3_ROTATION, true);
         left.waitWheelCompletion();
         right.waitWheelCompletion();
+
+        map.turnLeft();
     }
 
     public void moveRight1() throws IOException{
@@ -202,7 +205,7 @@ public class Robot {
         right.waitWheelCompletion();
     }
 
-    public void moveRight() throws IOException{
+    public void turnRight() throws IOException{
 
         right.moveStepWheel(-20, 0, 50, 0,true);
         left.moveStepWheel(-20, 0, 50, 0, true);
@@ -220,6 +223,7 @@ public class Robot {
         right.waitWheelCompletion();
         left.waitWheelCompletion();
 
+        map.turnRight();
 
     }
 
@@ -231,5 +235,45 @@ public class Robot {
         arm.release(SPEED_PICKUP_RELEASE, STEP_PICKUP_RELEASE);
     }
 
-    /* ------------------ NEARBY METHODS ----------------------*/
+    //the robot will look to the North at the end
+    public void moveTo (int x, int y)throws IOException{
+        int distX = x - map.getM();
+        int distY = y - map.getN();
+
+        while(x != map.getM() && y != map.getN()){
+
+            if(distX < 0) {
+                turnLeft();
+                for (int i = 0; i > distX; i--) {
+                    moveForward();
+                }
+                turnRight();
+            }
+
+            if(distX > 0) {
+                turnRight();
+                for (int i = 0; i < distX; i++) {
+                    moveForward();
+                }
+                turnLeft();
+            }
+
+            if(distY < 0) {
+                for (int i = 0; i > distY; i--) {
+                    moveForward();
+                }
+            }
+
+            if(distY > 0) {
+                turnLeft();
+                turnLeft();
+                for (int i = 0; i < distY; i++) {
+                    moveForward();
+                }
+                turnLeft();
+                turnLeft();
+            }
+        }
+
+    }
 }

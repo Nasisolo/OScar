@@ -4,20 +4,34 @@ public class FieldMap {
 
     private int M; //x
     private int N; //y
+    private int Mact;
+    private int Nact;
 
-    private int actualM;
-    private int actualN;
+    private int Msafe;
+    private int Nsafe;
 
-    private int startM;
-    private int startN;
+
+    private String[][] map;
 
     private Robot.Direction actualDirection;
+    private Robot.Direction startDirection;
 
-    public FieldMap(int M, int N, Robot.Direction actualDirection){
+    public FieldMap(int M, int N, int Mact, int Nact, Robot.Direction actualDirection){
         this.M = M;
         this.N = N;
-        this.actualDirection = actualDirection;
+        this.Mact = Mact;
+        this.Nact = Nact;
 
+        this.Msafe = Mact;
+        this.Nsafe = Nact;
+
+        this.actualDirection = actualDirection;
+        this.startDirection = actualDirection;
+
+        map = new String[N][M];
+        for(int i=0; i<N;i++)
+            for(int j=0; j<M; j++)
+                map[i][j] = " ";
     }
 
     public void moveForward(){
@@ -69,6 +83,34 @@ public class FieldMap {
                 this.actualDirection = Robot.Direction.NORTH;
                 break;
         }
+    }
+
+    public int getM() {
+        return M;
+    }
+    public int getN() {
+        return N;
+    }
+    public int getMact() {
+        return Mact;
+    }
+    public int getNact() {
+        return Nact;
+    }
+    public int getMsafe(){
+        return Msafe;
+    }
+    public int getNsafe(){
+        return Nsafe;
+    }
+
+    public Robot.Direction getActualDirection(){return actualDirection;}
+    public Robot.Direction getStartDirection(){return startDirection;}
+
+    public Robot.Direction getOppositeDirection(){
+        turnLeft();
+        turnLeft();
+        return actualDirection;
     }
 
 

@@ -33,7 +33,7 @@
         android:layout_marginBottom="16dp"
         android:text="@string/powered"
         android:textAlignment="center"
-        android:textColor="#B79131"
+        android:textColor="#00FFFFFF"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

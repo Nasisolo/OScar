@@ -104,4 +104,31 @@
         android:layout_marginRight="@dimen/default_gap"
         android:layout_marginBottom="@dimen/default_gap"></GridView>
 
+    <LinearLayout
+        android:id="@+id/LLButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/default_gap"
+        android:layout_marginTop="@dimen/default_gap"
+        android:layout_marginRight="@dimen/default_gap"
+        android:layout_marginBottom="@dimen/default_gap"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/buttonStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/start"
+            style="?android:attr/buttonBarButtonStyle"/>
+
+        <Button
+            android:id="@+id/buttonStop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/stop"
+            style="?android:attr/buttonBarButtonStyle"/>
+    </LinearLayout>
+
 </LinearLayout>

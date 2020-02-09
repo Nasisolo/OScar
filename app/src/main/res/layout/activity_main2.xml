@@ -1,7 +1,99 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/LLTest2"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white"
     android:orientation="vertical">
-</RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/titleTest1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/default_gap"
+            android:layout_marginTop="@dimen/default_gap"
+            android:layout_marginRight="@dimen/default_gap"
+            android:layout_marginBottom="@dimen/default_gap"
+            android:text="@string/_1_movimento"
+            android:textAlignment="center"
+            android:textColor="#B79131"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/LLmapTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/default_gap"
+        android:layout_marginTop="@dimen/default_gap"
+        android:layout_marginRight="@dimen/default_gap"
+        android:layout_marginBottom="@dimen/default_gap"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/mapTitle"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/default_gap"
+            android:layout_marginTop="@dimen/default_gap"
+            android:layout_marginRight="@dimen/default_gap"
+            android:layout_marginBottom="@dimen/default_gap"
+            android:layout_weight="1"
+            android:text="@string/mappa"
+            android:textAlignment="center"
+            android:textColor="#B79131"
+            android:textSize="30sp"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+
+    <GridView
+        android:id="@+id/grid_view"
+        android:layout_width="match_parent"
+        android:layout_height="388dp"
+        android:columnWidth="20dip"
+        android:gravity="center"
+        android:horizontalSpacing="2dp"
+        android:numColumns="20"
+        android:stretchMode="columnWidth"
+        android:verticalSpacing="2dp"
+        android:layout_marginLeft="@dimen/default_gap"
+        android:layout_marginTop="@dimen/default_gap"
+        android:layout_marginRight="@dimen/default_gap"
+        android:layout_marginBottom="@dimen/default_gap"></GridView>
+
+    <LinearLayout
+        android:id="@+id/LLButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/default_gap"
+        android:layout_marginTop="@dimen/default_gap"
+        android:layout_marginRight="@dimen/default_gap"
+        android:layout_marginBottom="@dimen/default_gap"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/buttonStart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/start"
+            style="?android:attr/buttonBarButtonStyle"/>
+
+        <Button
+            android:id="@+id/buttonStop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/stop"
+            style="?android:attr/buttonBarButtonStyle"/>
+    </LinearLayout>
+
+</LinearLayout>

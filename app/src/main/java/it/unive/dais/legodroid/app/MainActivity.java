@@ -4,36 +4,26 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 
 import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.ExecutionException;
 
 import it.unive.dais.legodroid.lib.EV3;
 import it.unive.dais.legodroid.lib.GenEV3;
-import it.unive.dais.legodroid.lib.comm.BluetoothConnection;
-import it.unive.dais.legodroid.lib.plugs.GyroSensor;
-import it.unive.dais.legodroid.lib.plugs.LightSensor;
 import it.unive.dais.legodroid.lib.plugs.Plug;
 import it.unive.dais.legodroid.lib.plugs.TachoMotor;
-import it.unive.dais.legodroid.lib.plugs.TouchSensor;
-import it.unive.dais.legodroid.lib.plugs.UltrasonicSensor;
 import it.unive.dais.legodroid.lib.util.Consumer;
 import it.unive.dais.legodroid.lib.util.Prelude;
-import it.unive.dais.legodroid.lib.util.ThrowingConsumer;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -159,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
     private void legoMain(EV3.Api api) {
         final String TAG = Prelude.ReTAG("legoMain");
 
-        Robot robot = new Robot(api, "OScar");
+        Robot robot = new Robot(api, "OScar", new FieldMap(0,0, 0, 0, Robot.Direction.NORTH));
         BrickConnection conn = new BrickConnection("OScar");
 
 
@@ -268,7 +258,7 @@ public class MainActivity extends AppCompatActivity {
                     robot.moveBackward();
                     */
 
-                    robot.moveRight();
+                    //robot.moveRight();
 
                     robot.waitUntilReady();
                 } catch (IOException | InterruptedException | ExecutionException e) {

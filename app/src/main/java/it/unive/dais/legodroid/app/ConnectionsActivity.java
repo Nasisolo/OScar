@@ -6,18 +6,15 @@ import android.content.Context;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.annotation.CallSuper;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-
-
 import android.util.Log;
 import android.widget.Toast;
 
-
+import androidx.annotation.CallSuper;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.google.android.gms.common.api.Status;
 import com.google.android.gms.nearby.Nearby;
@@ -44,7 +41,6 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.Set;
 
-import static it.unive.dais.legodroid.app.Constants.TAG;
 
 /** A class that connects to Nearby Connections and provides convenience methods and callbacks. */
 public abstract class ConnectionsActivity extends AppCompatActivity {
@@ -64,6 +60,7 @@ public abstract class ConnectionsActivity extends AppCompatActivity {
             };
 
     private static final int REQUEST_CODE_REQUIRED_PERMISSIONS = 1;
+    private static final String TAG = "OScar";
 
     /** Our handler to Nearby Connections. */
     private ConnectionsClient mConnectionsClient;
@@ -185,7 +182,7 @@ public abstract class ConnectionsActivity extends AppCompatActivity {
         if (requestCode == REQUEST_CODE_REQUIRED_PERMISSIONS) {
             for (int grantResult : grantResults) {
                 if (grantResult == PackageManager.PERMISSION_DENIED) {
-                    Toast.makeText(this, "Cannot start without required permissions", Toast.LENGTH_LONG).show();
+                    Toast.makeText(this, R.string.error_missing_permissions, Toast.LENGTH_LONG).show();
                     finish();
                     return;
                 }
