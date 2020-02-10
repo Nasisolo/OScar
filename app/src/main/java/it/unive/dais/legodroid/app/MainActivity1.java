@@ -70,8 +70,8 @@ public class MainActivity1 extends AppCompatActivity {
         });
     }
 
-    int Msize, Nsize, Minit, Ninit;
-    FieldMap map;
+    private int Msize, Nsize, Minit, Ninit;
+    private FieldMap map;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -117,12 +117,12 @@ public class MainActivity1 extends AppCompatActivity {
 
 
 
-            Button stopButton = findViewById(R.id.stopButton);
+            Button stopButton = findViewById(R.id.buttonStop);
             stopButton.setOnClickListener(v -> {
                 ev3.cancel();   // fire cancellation signal to the EV3 task
             });
 
-            Button startButton = findViewById(R.id.startButton);
+            Button startButton = findViewById(R.id.buttonStart);
             startButton.setOnClickListener(v -> Prelude.trap(() -> ev3.run(this::legoMainCustomApi, MainActivity1.MyCustomApi::new)));
             // alternatively with plain EV3
             //startButton.setOnClickListener(v -> Prelude.trap(() -> ev3.run(this::legoMain));
@@ -143,8 +143,8 @@ public class MainActivity1 extends AppCompatActivity {
     private void legoMain(EV3.Api api) {
         final String TAG = Prelude.ReTAG("legoMain");
 
-        Robot robot = new Robot(api, "OScar", map);
-        BrickConnection conn = new BrickConnection("OScar");
+        Robot robot = new Robot(api, "AGELM", map);
+        //BrickConnection conn = new BrickConnection("OScar");
 
 
 

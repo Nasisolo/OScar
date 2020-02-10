@@ -177,15 +177,6 @@ public class Robot {
         left.waitWheelCompletion();
     }
 
-    public void turnLeft() throws IOException{
-        left.moveStepWheel(-SPEED_ROTATION, STEP1_ROTATION, STEP2_ROTATION, STEP3_ROTATION, true);
-        right.moveStepWheel(SPEED_ROTATION, STEP1_ROTATION, STEP2_ROTATION, STEP3_ROTATION, true);
-        left.waitWheelCompletion();
-        right.waitWheelCompletion();
-
-        map.turnLeft();
-    }
-
     public void moveRight1() throws IOException{
 
         right.moveStepWheel(SPEED_FORWARD, 78-10, 40, 78,true);
@@ -203,6 +194,28 @@ public class Robot {
         left.moveStepWheel(-SPEED_FORWARD+10, 0, 210, 0, true);
         left.waitWheelCompletion();
         right.waitWheelCompletion();
+    }
+
+    public void turnLeft() throws IOException{
+
+        right.moveStepWheel(20, 0, -50, 0,true);
+        left.moveStepWheel(20, 0, -50, 0, true);
+        right.waitWheelCompletion();
+        left.waitWheelCompletion();
+
+
+        //right.moveStepWheel(-SPEED_ROTATION, STEP1_ROTATION, STEP2_ROTATION, STEP3_ROTATION, true);
+        left.moveStepWheel(-SPEED_ROTATION, -STEP1_ROTATION, -465, -STEP3_ROTATION, true);
+        //right.waitWheelCompletion();
+        left.waitWheelCompletion();
+
+        right.moveStepWheel(+SPEED_FORWARD-10, 0, -365, 0,true);
+        left.moveStepWheel(+SPEED_FORWARD-10, 0, -365, 0, true);
+        right.waitWheelCompletion();
+        left.waitWheelCompletion();
+
+        map.turnLeft();
+
     }
 
     public void turnRight() throws IOException{
